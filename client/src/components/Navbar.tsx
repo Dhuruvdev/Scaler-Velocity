@@ -9,7 +9,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-6 pointer-events-none">
       <div className="flex items-center gap-2 px-6 py-2 bg-secondary/80 backdrop-blur-md border border-border/50 rounded-full pointer-events-auto shadow-xl">
         <Link href="/" className="text-xl font-display lowercase tracking-tighter mr-4 text-white">
-          arik<span className="text-primary">.</span>
+          Dhuruv M<span className="text-primary">.</span>
         </Link>
         <div className="hidden md:flex items-center gap-6 mr-6">
           {["Services", "Work", "About", "Blog", "Pages"].map((item) => (

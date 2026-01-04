@@ -7,7 +7,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
           <Link href="/" className="text-2xl font-display lowercase tracking-tighter text-white">
-            arik<span className="text-primary">.</span>
+            Dhuruv M<span className="text-primary">.</span>
           </Link>
         </div>
         
