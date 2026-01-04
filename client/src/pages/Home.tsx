@@ -62,12 +62,11 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto mt-20">
-          <h1 className="text-6xl md:text-8xl mb-4 leading-tight">
-            Web Designer <br />
-            <span className="italic font-serif">& Developer</span>
+          <h1 className="text-6xl md:text-9xl mb-6 leading-tight font-display font-medium overflow-hidden">
+            Dhuruv M
           </h1>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto mb-12">
-            Premium web design, development, and SEO services to help your business stand out.
+          <p className="text-muted-foreground text-lg md:text-2xl max-w-2xl mx-auto mb-12 uppercase tracking-[0.2em] font-light">
+            Intern on Scaler 5 week internship challenge Showcase
           </p>
           <div className="flex flex-col items-center gap-4 button-container">
             <Button variant="ghost" className="group flex items-center gap-2 no-default-hover-elevate">
