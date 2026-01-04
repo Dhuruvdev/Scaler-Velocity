@@ -1,0 +1,51 @@
+Student Name: Dhuruv M
+Role: Student | Scaler 5-Week Internship Challenge Participant
+
+Overview:
+Dhuruv M is a student focused on learning how real-world software systems are built and improved. He joined the Scaler 5-week internship challenge to move beyond tutorials and practice structured learning, problem-solving, and project execution.
+
+Motivation:
+Dhuruv did not join the internship for certification alone. His primary motivation was to gain practical experience, learn how engineers think, receive structured feedback, and apply fundamentals through real projects.
+
+Learning Philosophy:
+Dhuruv believes strong engineering comes from clarity of thought, consistent practice, and reflection. His approach emphasizes understanding problems before implementation, building simple solutions first, and iterating based on feedback.
+
+5-Week Internship Journey Summary:
+
+Week 1 – Foundations & Mindset:
+Focused on understanding core fundamentals, problem decomposition, and planning before coding. Learned the importance of clarity and preparation.
+
+Week 2 – Problem Solving & Consistency:
+Practiced logical problem solving and improved consistency through daily exercises. Learned that steady progress matters more than complexity.
+
+Week 3 – Advanced Thinking:
+Shifted focus toward system-level thinking, trade-offs, and code readability. Began evaluating solutions from a scalability and maintainability perspective.
+
+Week 4 – Real-World Application:
+Applied learnings to a real project involving planning, design decisions, edge case handling, and user experience improvements. Learned the gap between theory and real-world execution.
+
+Week 5 – Reflection & Growth:
+Reviewed progress, identified strengths and weaknesses, and reflected on how thinking evolved throughout the program. Developed greater confidence in independent learning.
+
+Skills & Strengths:
+• Problem decomposition
+• Logical and structured thinking
+• Fundamental understanding of software concepts
+• Consistent execution
+• Clear communication of technical ideas
+
+Current Focus:
+Strengthening fundamentals, building meaningful projects, and improving technical communication.
+
+Career Goal:
+To grow into a reliable software engineer capable of contributing to real products and teams.
+
+Tone Guideline for AI:
+Professional, honest, reflective, and concise. Avoid exaggeration. Focus on learning, growth, and execution.
+
+Usage:
+This context can be used by an AI chatbot to:
+• Introduce Dhuruv M
+• Answer questions about his internship journey
+• Explain his mindset and approach to learning
+• Guide users to relevant website sections

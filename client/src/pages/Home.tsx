@@ -37,6 +37,26 @@ export default function Home() {
       ease: "power4.out"
     }, "-=0.5");
 
+    tl.from(".journey-title", {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      scrollTrigger: {
+        trigger: ".journey-title",
+        start: "top 80%"
+      }
+    })
+    .from(".journey-card", {
+      y: 50,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".journey-card",
+        start: "top 85%"
+      }
+    }, "-=0.4");
+
     return () => lenis.destroy();
   }, []);
 
@@ -79,23 +99,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Internship Journey Section */}
       <section className="py-24 px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h2 className="text-4xl md:text-5xl uppercase tracking-tighter mb-16 text-center journey-title">5-Week Internship Journey</h2>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {[
-            { id: "01", title: "WEB DESIGN", desc: "Crafting beautiful, intuitive interfaces that engage users and reflect your brand identity." },
-            { id: "02", title: "DEVELOPMENT", desc: "Building fast, secure, and scalable web applications using the latest technologies." },
-            { id: "03", title: "CONTENT & SEO", desc: "Optimizing your online presence to reach the right audience and drive organic growth." }
-          ].map((service) => (
-            <Card key={service.id} className="p-8 bg-secondary/50 border-border/50 hover-elevate group">
-              <span className="text-muted-foreground text-sm mb-4 block">{service.id}</span>
-              <h3 className="text-2xl mb-4 uppercase tracking-wider">{service.title}</h3>
-              <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
-                {service.desc}
-              </p>
-              <Button variant="ghost" className="p-0 h-auto text-xs uppercase tracking-widest group-hover:text-primary transition-colors no-default-hover-elevate">
-                About {service.title.split(' ')[0]}
-              </Button>
+            { id: "W1", title: "Foundations", desc: "Understanding core fundamentals, problem decomposition, and planning before coding." },
+            { id: "W2", title: "Problem Solving", desc: "Practicing logical problem solving and consistency through daily exercises." },
+            { id: "W3", title: "Advanced Thinking", desc: "System-level thinking, trade-offs, and code readability for scalability." },
+            { id: "W4", title: "Real-World Application", desc: "Applying learnings to a real project with design decisions and edge cases." },
+            { id: "W5", title: "Reflection & Growth", desc: "Reviewing progress, identifying strengths, and reflecting on evolution." }
+          ].map((week, index) => (
+            <Card key={week.id} className="p-6 bg-secondary/30 border-border/50 hover-elevate group relative overflow-hidden h-full flex flex-col justify-between journey-card">
+              <div className="relative z-10">
+                <span className="text-primary font-mono text-xs mb-2 block font-bold">{week.id}</span>
+                <h3 className="text-lg mb-3 uppercase tracking-wider font-bold group-hover:text-primary transition-colors">{week.title}</h3>
+                <p className="text-muted-foreground text-xs leading-relaxed">
+                  {week.desc}
+                </p>
+              </div>
+              <div className="mt-6 flex justify-end">
+                <div className="w-8 h-px bg-border group-hover:w-full group-hover:bg-primary transition-all duration-500" />
+              </div>
             </Card>
           ))}
         </div>
