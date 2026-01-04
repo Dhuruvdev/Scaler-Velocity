@@ -1,12 +1,60 @@
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { ArrowDown, ExternalLink } from "lucide-react";
+import { ArrowDown, ExternalLink, MessageCircle, X, Send, User } from "lucide-react";
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Lenis from "@studio-freight/lenis";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessage, setChatMessage] = useState("");
+  const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { data: conversation } = useQuery({
+    queryKey: ["/api/conversations", currentConversationId],
+    enabled: !!currentConversationId,
+  });
+
+  const createConversation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/conversations", { title: "Dhuruv AI Chat" });
+      return res.json();
+    },
+    onSuccess: (data) => {
+      setCurrentConversationId(data.id);
+    },
+  });
+
+  const sendMessage = useMutation({
+    mutationFn: async (content: string) => {
+      if (!currentConversationId) return;
+      await apiRequest("POST", `/api/conversations/${currentConversationId}/messages`, { content });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/conversations", currentConversationId] });
+      setChatMessage("");
+    },
+  });
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [conversation?.messages]);
+
+  const handleOpenChat = () => {
+    setIsChatOpen(true);
+    if (!currentConversationId) {
+      createConversation.mutate();
+    }
+  };
   const heroRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<HTMLDivElement>(null);
 
@@ -184,6 +232,83 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Chatbot Toggle */}
+      <Button
+        size="icon"
+        className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-110"
+        onClick={handleOpenChat}
+      >
+        <MessageCircle className="w-8 h-8 text-primary-foreground" />
+      </Button>
+
+      {/* Chatbot Modal */}
+      {isChatOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+          <Card className="w-full max-w-lg h-[600px] flex flex-col relative shadow-2xl border-border/50 overflow-hidden">
+            <div className="p-4 border-b flex justify-between items-center bg-secondary/30">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">DA</div>
+                <div>
+                  <h3 className="font-bold text-sm">Dhuruv AI</h3>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Always Active</p>
+                </div>
+              </div>
+              <Button size="icon" variant="ghost" onClick={() => setIsChatOpen(false)}>
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <ScrollArea className="flex-1 p-4 bg-background/50" ref={scrollRef}>
+              <div className="space-y-4">
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary shrink-0 flex items-center justify-center text-[10px] text-primary-foreground font-bold">DA</div>
+                  <div className="bg-secondary/50 p-3 rounded-2xl rounded-tl-none text-sm max-w-[80%]">
+                    Hi 👋 I'm Dhuruv AI. I can walk you through my internship journey, projects, and how I think as an engineer. What would you like to explore?
+                  </div>
+                </div>
+
+                {conversation?.messages?.map((msg: any) => (
+                  <div key={msg.id} className={cn("flex gap-3", msg.role === "user" ? "flex-row-reverse" : "")}>
+                    <div className={cn(
+                      "w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[10px] font-bold",
+                      msg.role === "user" ? "bg-muted text-muted-foreground" : "bg-primary text-primary-foreground"
+                    )}>
+                      {msg.role === "user" ? <User className="w-4 h-4" /> : "DA"}
+                    </div>
+                    <div className={cn(
+                      "p-3 rounded-2xl text-sm max-w-[80%]",
+                      msg.role === "user" ? "bg-primary text-primary-foreground rounded-tr-none" : "bg-secondary/50 rounded-tl-none"
+                    )}>
+                      {msg.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+
+            <div className="p-4 border-t bg-secondary/30">
+              <form 
+                className="flex gap-2" 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (chatMessage.trim()) sendMessage.mutate(chatMessage);
+                }}
+              >
+                <Input
+                  placeholder="Ask me anything..."
+                  value={chatMessage}
+                  onChange={(e) => setChatMessage(e.target.value)}
+                  className="bg-background border-border/50 h-10"
+                />
+                <Button size="icon" type="submit" disabled={sendMessage.isPending || !chatMessage.trim()}>
+                  <Send className="w-4 h-4" />
+                </Button>
+              </form>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
