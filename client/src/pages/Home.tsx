@@ -251,9 +251,9 @@ export default function Home() {
           <Card className="w-full max-w-lg h-[600px] flex flex-col relative shadow-2xl border-border/50 overflow-hidden">
             <div className="p-4 border-b flex justify-between items-center bg-secondary/30">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">DA</div>
+                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">C</div>
                 <div>
-                  <h3 className="font-bold text-sm">Dhuruv AI</h3>
+                  <h3 className="font-bold text-sm">Chatbot</h3>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Always Active</p>
                 </div>
               </div>
@@ -265,9 +265,9 @@ export default function Home() {
             <ScrollArea className="flex-1 p-4 bg-background/50" ref={scrollRef}>
               <div className="space-y-4">
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary shrink-0 flex items-center justify-center text-[10px] text-primary-foreground font-bold">DA</div>
+                  <div className="w-8 h-8 rounded-full bg-primary shrink-0 flex items-center justify-center text-[10px] text-primary-foreground font-bold">C</div>
                   <div className="bg-secondary/50 p-3 rounded-2xl rounded-tl-none text-sm max-w-[80%]">
-                    Hi 👋 I'm Dhuruv AI. I can walk you through my internship journey, projects, and how I think as an engineer. What would you like to explore?
+                    Hi 👋 I'm your Chatbot. I can walk you through my internship journey, projects, and how I think as an engineer. What would you like to explore?
                   </div>
                 </div>
 
@@ -277,7 +277,7 @@ export default function Home() {
                       "w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[10px] font-bold",
                       msg.role === "user" ? "bg-muted text-muted-foreground" : "bg-primary text-primary-foreground"
                     )}>
-                      {msg.role === "user" ? <User className="w-4 h-4" /> : "DA"}
+                      {msg.role === "user" ? <User className="w-4 h-4" /> : "C"}
                     </div>
                     <div className={cn(
                       "p-3 rounded-2xl text-sm max-w-[80%]",
