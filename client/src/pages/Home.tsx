@@ -126,38 +126,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Work Section */}
-      <section className="py-24 px-4 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-12">
-          <h2 className="text-4xl md:text-5xl uppercase tracking-tighter">Assignment Work</h2>
-          <Button variant="ghost" className="uppercase tracking-widest text-xs no-default-hover-elevate">See All</Button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {/* Handwriting Notes Section */}
+      <section className="py-24 px-4 max-w-7xl mx-auto overflow-hidden">
+        <h2 className="text-3xl md:text-4xl uppercase tracking-tighter mb-12 text-center">Boring but Real Reflections</h2>
+        <div className="flex gap-6 overflow-x-auto pb-8 snap-x no-scrollbar">
           {[
-            { title: "AI avatar introduction Video", category: "Video" },
-            { title: "Real estate website", category: "Web Design" },
-            { title: "Yt video", category: "Video" }
-          ].map((project, i) => (
-            <div key={i} className="group cursor-pointer">
-              <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground italic">
-                  {project.title}
+            { date: "Day 3", note: "Bhai, honestly coding is hard. Today I tried to break a big problem into small pieces like they said in W1. It felt slow but atleast I didn't get stuck for 3 hours on one error. Slowly understanding." },
+            { date: "Day 12", note: "Week 2 is all about consistency. Sometimes I want to play games but I forced myself to solve 2 problems. My English is not good so explaining logic is difficult, but I am trying my best." },
+            { date: "Day 20", note: "Thinking about 'trade-offs' now. In school we just want the answer, but here they ask 'why this way?'. Readability is important because tomorrow I will forget my own code haha." },
+            { date: "Day 28", note: "Real projects are different from tutorials. Tutorials always work, but real code breaks in 100 places. Dealing with edge cases today. It's tiring but I like the challenge." },
+            { date: "Day 35", note: "Last week. I'm not a pro yet, but I'm much better than Day 1. Confidence is slowly coming. Scaler challenge was tough but I didn't quit. That's a win for me." }
+          ].map((note, i) => (
+            <div key={i} className="min-w-[300px] md:min-w-[400px] snap-center">
+              <Card className="p-8 bg-[#fdf6e3] dark:bg-[#2c2c2c] border-none shadow-xl transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div className="font-serif text-sm text-[#8b7d6b] dark:text-[#a0a0a0] mb-4 border-b border-[#8b7d6b]/20 pb-2">{note.date}</div>
+                <p className="font-handwriting text-xl md:text-2xl text-[#2c2c2c] dark:text-[#e0e0e0] leading-relaxed opacity-90 italic">
+                  "{note.note}"
+                </p>
+                <div className="mt-6 flex justify-end">
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">- Dhuruv's Personal Log</span>
                 </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="text-xl uppercase tracking-tight">{project.title}</h3>
-                  <span className="text-xs text-muted-foreground uppercase tracking-widest">{project.category}</span>
-                </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ExternalLink className="w-4 h-4" />
-                </div>
-              </div>
+              </Card>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Assignment Work Section */}
     </div>
   );
 }
