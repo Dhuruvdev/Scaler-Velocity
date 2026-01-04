@@ -236,6 +236,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Illusion Thanks Section */}
+      <section className="py-24 relative overflow-hidden bg-[#0a0a0a]">
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05)_0%,transparent_50%)] animate-pulse" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-7xl uppercase tracking-tighter mb-6 font-display">Special Thanks</h2>
+            <p className="text-muted-foreground uppercase tracking-[0.3em] text-xs">To the pillars of my 5-week journey</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)]">
+              <div className="aspect-square mb-6 overflow-hidden rounded-full border-2 border-primary/20 p-2 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=400" alt="Scaler" className="w-full h-full object-cover rounded-full" />
+              </div>
+              <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">Scaler</h3>
+              <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
+                For the platform, the structure, and the challenge that pushed me to grow.
+              </p>
+            </Card>
+
+            <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] scale-110 z-20">
+              <div className="aspect-square mb-6 overflow-hidden rounded-full border-2 border-primary/20 p-2 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=400" alt="Host" className="w-full h-full object-cover rounded-full" />
+              </div>
+              <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">Our Host</h3>
+              <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
+                For the guidance and the live energy that made every session meaningful.
+              </p>
+            </Card>
+
+            <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)]">
+              <div className="aspect-square mb-6 overflow-hidden rounded-full border-2 border-primary/20 p-2 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=400" alt="Mentors" className="w-full h-full object-cover rounded-full" />
+              </div>
+              <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">All Mentors</h3>
+              <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
+                For the technical wisdom and the live feedback during the sessions.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Chatbot Toggle */}
       <Button
         size="icon"
