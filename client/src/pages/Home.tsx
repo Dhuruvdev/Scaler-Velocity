@@ -105,21 +105,20 @@ export default function Home() {
       {/* Work Section */}
       <section className="py-24 px-4 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-12">
-          <h2 className="text-4xl md:text-5xl uppercase tracking-tighter">Selected Work</h2>
+          <h2 className="text-4xl md:text-5xl uppercase tracking-tighter">Assignment Work</h2>
           <Button variant="ghost" className="uppercase tracking-widest text-xs no-default-hover-elevate">See All</Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {[
-            { title: "Space", category: "Web Design" },
-            { title: "Nova", category: "Web Design" },
-            { title: "Sonic", category: "Web Design" },
-            { title: "Solar", category: "Web Design" }
+            { title: "AI avatar introduction Video", category: "Video" },
+            { title: "Real estate website", category: "Web Design" },
+            { title: "Yt video", category: "Video" }
           ].map((project, i) => (
             <div key={i} className="group cursor-pointer">
               <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
                 <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground italic">
-                  Project {project.title}
+                  {project.title}
                 </div>
               </div>
               <div className="flex justify-between items-center">

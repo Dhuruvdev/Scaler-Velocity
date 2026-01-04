@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { SiLinkedin, SiInstagram, SiDiscord } from "react-icons/si";
 
 export function Footer() {
   return (
@@ -10,10 +11,16 @@ export function Footer() {
           </Link>
         </div>
         
-        <div className="flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
-          <a href="#" className="hover:text-foreground transition-colors">Instagram</a>
-          <a href="#" className="hover:text-foreground transition-colors">Behance</a>
-          <a href="#" className="hover:text-foreground transition-colors">Dribbble</a>
+        <div className="flex items-center gap-6 text-muted-foreground">
+          <a href="#" className="hover:text-primary transition-colors">
+            <SiLinkedin className="w-5 h-5" />
+          </a>
+          <a href="#" className="hover:text-primary transition-colors">
+            <SiInstagram className="w-5 h-5" />
+          </a>
+          <a href="#" className="hover:text-primary transition-colors">
+            <SiDiscord className="w-5 h-5" />
+          </a>
         </div>
 
         <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
