@@ -5,11 +5,14 @@ import { ArrowDown, ExternalLink, MessageCircle, X, Send, User } from "lucide-re
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -17,7 +20,7 @@ export default function Home() {
   const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { data: conversation } = useQuery({
+  const { data: conversation } = useQuery<any>({
     queryKey: ["/api/conversations", currentConversationId],
     enabled: !!currentConversationId,
   });
