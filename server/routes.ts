@@ -1,13 +1,16 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { api } from "@shared/routes";
+import { api, errorSchemas } from "@shared/routes";
 import { z } from "zod";
+import { registerChatRoutes } from "./replit_integrations/chat";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Chat routes
+  registerChatRoutes(app);
   
   // Timeline
   app.get(api.timeline.list.path, async (req, res) => {

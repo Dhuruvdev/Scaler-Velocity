@@ -4,6 +4,7 @@ import { z } from "zod";
 
 // === TABLE DEFINITIONS ===
 
+export * from "./models/chat";
 export const timeline = pgTable("timeline", {
   id: serial("id").primaryKey(),
   week: integer("week").notNull(),
