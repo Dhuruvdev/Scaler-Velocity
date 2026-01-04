@@ -29,7 +29,7 @@ export default function Home() {
       }
     });
 
-    tl.from(heroRef.current?.querySelectorAll("h1, p, .button-container") || [], {
+    tl.from(".hero-animate", {
       y: 100,
       opacity: 0,
       duration: 1,
@@ -62,13 +62,13 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto mt-20">
-          <h1 className="text-6xl md:text-9xl mb-6 leading-tight font-display font-medium overflow-hidden">
+          <h1 className="text-6xl md:text-9xl mb-6 leading-tight font-display font-medium overflow-hidden hero-animate">
             Dhuruv M
           </h1>
-          <p className="text-muted-foreground text-lg md:text-2xl max-w-2xl mx-auto mb-12 uppercase tracking-[0.2em] font-light">
+          <p className="text-muted-foreground text-lg md:text-2xl max-w-2xl mx-auto mb-12 uppercase tracking-[0.2em] font-light hero-animate">
             Intern on Scaler 5 week internship challenge Showcase
           </p>
-          <div className="flex flex-col items-center gap-4 button-container">
+          <div className="flex flex-col items-center gap-4 button-container hero-animate">
             <Button variant="ghost" className="group flex items-center gap-2 no-default-hover-elevate">
               <div className="p-2 border rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <ArrowDown className="w-4 h-4" />
