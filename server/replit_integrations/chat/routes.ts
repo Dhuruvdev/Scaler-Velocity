@@ -3,7 +3,7 @@ import { chatStorage } from "./storage";
 import type { Express, Request, Response } from "express";
 
 const xai = new OpenAI({
-  apiKey: process.env.XAI_API_KEY,
+  apiKey: process.env.XAI_API_KEY || "dummy_key",
   baseURL: "https://api.x.ai/v1",
 });
 

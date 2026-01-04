@@ -1,32 +1,24 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Link } from "wouter";
 
 export function Footer() {
   return (
-    <footer className="py-12 border-t border-border mt-20 bg-black/20">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div>
-          <h3 className="text-lg font-bold font-display text-white">Scaler Internship Portfolio</h3>
-          <p className="text-sm text-muted-foreground mt-2 max-w-xs">
-            Documenting my 5-week journey from student to engineering mindset.
-          </p>
+    <footer className="bg-background border-t border-border/50 py-12 px-4">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="text-2xl font-display lowercase tracking-tighter text-white">
+            arik<span className="text-primary">.</span>
+          </Link>
         </div>
         
-        <div className="flex gap-6">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-            <Github className="w-5 h-5" />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-            <Linkedin className="w-5 h-5" />
-          </a>
-          <a href="mailto:hello@example.com" className="text-muted-foreground hover:text-primary transition-colors">
-            <Mail className="w-5 h-5" />
-          </a>
+        <div className="flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
+          <a href="#" className="hover:text-foreground transition-colors">Instagram</a>
+          <a href="#" className="hover:text-foreground transition-colors">Behance</a>
+          <a href="#" className="hover:text-foreground transition-colors">Dribbble</a>
         </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-8 text-center md:text-left">
-        <p className="text-xs text-muted-foreground/50">
-          © {new Date().getFullYear()} Built with React, Tailwind & Framer Motion.
-        </p>
+
+        <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
+          © {new Date().getFullYear()} Arik. All Rights Reserved.
+        </div>
       </div>
     </footer>
   );
