@@ -17,7 +17,7 @@ export function Footer() {
         </div>
 
         <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
-          © {new Date().getFullYear()} Arik. All Rights Reserved.
+          © 2026 Arik. All Rights Reserved.
         </div>
       </div>
     </footer>

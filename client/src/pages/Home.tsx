@@ -2,12 +2,56 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowDown, ExternalLink } from "lucide-react";
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import Lenis from "@studio-freight/lenis";
 
 export default function Home() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const transitionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis();
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    const tl = gsap.timeline();
+    tl.to(transitionRef.current, {
+      scale: 1,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power4.inOut",
+      onComplete: () => {
+        if (transitionRef.current) transitionRef.current.style.display = "none";
+      }
+    });
+
+    tl.from(heroRef.current?.querySelectorAll("h1, p, .button-container") || [], {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: "power4.out"
+    }, "-=0.5");
+
+    return () => lenis.destroy();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
+      <div 
+        ref={transitionRef} 
+        className="fixed inset-0 z-[100] bg-primary flex items-center justify-center pointer-events-none"
+        style={{ transform: "scale(1.5)" }}
+      >
+        <div className="w-24 h-24 bg-background rounded-full animate-pulse" />
+      </div>
+
       {/* Hero Section */}
-      <section className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+      <section ref={heroRef} className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src={heroImg} 
@@ -25,8 +69,8 @@ export default function Home() {
           <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto mb-12">
             Premium web design, development, and SEO services to help your business stand out.
           </p>
-          <div className="flex flex-col items-center gap-4">
-            <Button variant="ghost" className="group flex items-center gap-2">
+          <div className="flex flex-col items-center gap-4 button-container">
+            <Button variant="ghost" className="group flex items-center gap-2 no-default-hover-elevate">
               <div className="p-2 border rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <ArrowDown className="w-4 h-4" />
               </div>
@@ -50,7 +94,7 @@ export default function Home() {
               <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
                 {service.desc}
               </p>
-              <Button variant="ghost" className="p-0 h-auto text-xs uppercase tracking-widest group-hover:text-primary transition-colors">
+              <Button variant="ghost" className="p-0 h-auto text-xs uppercase tracking-widest group-hover:text-primary transition-colors no-default-hover-elevate">
                 About {service.title.split(' ')[0]}
               </Button>
             </Card>
@@ -62,7 +106,7 @@ export default function Home() {
       <section className="py-24 px-4 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-12">
           <h2 className="text-4xl md:text-5xl uppercase tracking-tighter">Selected Work</h2>
-          <Button variant="ghost" className="uppercase tracking-widest text-xs">See All</Button>
+          <Button variant="ghost" className="uppercase tracking-widest text-xs no-default-hover-elevate">See All</Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {[
