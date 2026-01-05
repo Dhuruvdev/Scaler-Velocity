@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowDown, ExternalLink, MessageCircle } from "lucide-react";
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
 import realEstateImg from "@assets/IMG_20260104_234323_434_1767606998595.jpg";
+import avatarVideo from "@assets/Avatar_IV_Video_1767614204183.mp4";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -165,8 +166,32 @@ export default function Home() {
           <Button variant="ghost" className="uppercase tracking-widest text-xs no-default-hover-elevate">See All</Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Avatar Video Section */}
+          <div className="group cursor-pointer block">
+            <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
+              <video 
+                src={avatarVideo} 
+                className="w-full h-full object-cover"
+                loop
+                muted
+                playsInline
+                onMouseEnter={(e) => e.currentTarget.play()}
+                onMouseLeave={(e) => e.currentTarget.pause()}
+              />
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="text-xl uppercase tracking-tight">AI avatar introduction Video</h3>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest">Video</span>
+              </div>
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                <ExternalLink className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+
           {[
-            { title: "AI avatar introduction Video", category: "Video" },
             { title: "Real estate website", category: "Web Design", image: realEstateImg, url: "https://lumina-gdkv.onrender.com" },
             { title: "Yt video", category: "Video" }
           ].map((project, i) => (
