@@ -40,11 +40,41 @@ export default function Home() {
   const sendMessage = useMutation({
     mutationFn: async (content: string) => {
       if (!currentConversationId) return;
-      await apiRequest("POST", `/api/conversations/${currentConversationId}/messages`, { content });
+      
+      // Clear input immediately for better UX
+      setChatMessage("");
+      
+      const response = await fetch(`/api/conversations/${currentConversationId}/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content }),
+      });
+
+      if (!response.ok) throw new Error("Failed to send message");
+
+      const reader = response.body?.getReader();
+      if (!reader) return;
+
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n");
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const data = JSON.parse(line.slice(6));
+            if (data.error) {
+              console.error("Chat Error:", data.error);
+              throw new Error(data.error);
+            }
+          }
+        }
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/conversations", currentConversationId] });
-      setChatMessage("");
     },
   });
 

@@ -99,27 +99,34 @@ BEHAVIOR
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("Connection", "keep-alive");
 
-      const stream = await groq.chat.completions.create({
-        model: "llama3-8b-8192",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...history.map(m => ({ role: m.role as "user" | "assistant", content: m.content }))
-        ],
-        stream: true,
-      });
+      try {
+        const stream = await groq.chat.completions.create({
+          model: "llama3-8b-8192",
+          messages: [
+            { role: "system", content: systemPrompt },
+            ...history.map(m => ({ role: m.role as "user" | "assistant", content: m.content }))
+          ],
+          stream: true,
+        });
 
-      let fullResponse = "";
-      for await (const chunk of stream) {
-        const text = chunk.choices[0]?.delta?.content || "";
-        if (text) {
-          fullResponse += text;
-          res.write(`data: ${JSON.stringify({ content: text })}\n\n`);
+        let fullResponse = "";
+        for await (const chunk of stream) {
+          const text = chunk.choices[0]?.delta?.content || "";
+          if (text) {
+            fullResponse += text;
+            res.write(`data: ${JSON.stringify({ content: text })}\n\n`);
+          }
         }
-      }
 
-      await chatStorage.createMessage(conversationId, "assistant", fullResponse);
-      res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-      res.end();
+        await chatStorage.createMessage(conversationId, "assistant", fullResponse);
+        res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+        res.end();
+      } catch (streamError: any) {
+        console.error("Groq Stream Error:", streamError);
+        const errorMsg = streamError?.message || "AI service unavailable";
+        res.write(`data: ${JSON.stringify({ error: errorMsg })}\n\n`);
+        res.end();
+      }
     } catch (error) {
       if (!res.headersSent) res.status(500).json({ error: "Failed to send message" });
       else {
