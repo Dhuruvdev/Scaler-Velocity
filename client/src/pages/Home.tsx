@@ -41,13 +41,16 @@ export default function Home() {
     mutationFn: async (content: string) => {
       if (!currentConversationId) return;
       
+      const messageContent = content.trim();
+      if (!messageContent) return;
+
       // Clear input immediately for better UX
       setChatMessage("");
       
       const response = await fetch(`/api/conversations/${currentConversationId}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content: messageContent }),
       });
 
       if (!response.ok) throw new Error("Failed to send message");
@@ -64,10 +67,14 @@ export default function Home() {
         const lines = chunk.split("\n");
         for (const line of lines) {
           if (line.startsWith("data: ")) {
-            const data = JSON.parse(line.slice(6));
-            if (data.error) {
-              console.error("Chat Error:", data.error);
-              throw new Error(data.error);
+            try {
+              const data = JSON.parse(line.slice(6));
+              if (data.error) {
+                console.error("Chat Error:", data.error);
+                throw new Error(data.error);
+              }
+            } catch (e) {
+              // Ignore empty or malformed lines
             }
           }
         }
