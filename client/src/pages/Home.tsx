@@ -279,7 +279,7 @@ export default function Home() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-sans uppercase tracking-widest text-muted-foreground mb-1 italic">Warm regards,</p>
-                  <p className="text-3xl font-handwriting">Dhuruv M</p>
+                  <p className="text-5xl font-handwriting text-primary rotate-[-2deg] drop-shadow-sm">Dhuruv M</p>
                 </div>
               </div>
             </div>
