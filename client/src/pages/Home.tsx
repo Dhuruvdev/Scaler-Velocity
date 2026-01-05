@@ -64,6 +64,73 @@ export default function Home() {
       }
     }, "-=0.4");
 
+    // Scroll Animations for Assignment Work
+    gsap.from(".assignment-title", {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      scrollTrigger: {
+        trigger: ".assignment-title",
+        start: "top 85%"
+      }
+    });
+
+    gsap.from(".assignment-card", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.3,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".assignment-card",
+        start: "top 90%"
+      }
+    });
+
+    // Scroll Animations for Reflections
+    gsap.from(".reflection-title", {
+      scale: 0.9,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".reflection-title",
+        start: "top 90%"
+      }
+    });
+
+    gsap.from(".reflection-card-container", {
+      x: 100,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".reflection-card-container",
+        start: "top 85%"
+      }
+    });
+
+    // Scroll Animations for Special Thanks
+    gsap.from(".thanks-title", {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".thanks-title",
+        start: "top 90%"
+      }
+    });
+
+    gsap.from(".thanks-card", {
+      rotationX: -20,
+      opacity: 0,
+      duration: 1.5,
+      ease: "elastic.out(1, 0.75)",
+      scrollTrigger: {
+        trigger: ".thanks-card",
+        start: "top 85%"
+      }
+    });
+
     return () => lenis.destroy();
   }, []);
 
@@ -135,8 +202,8 @@ export default function Home() {
 
       {/* Handwriting Notes Section */}
       <section className="py-24 px-4 max-w-7xl mx-auto overflow-hidden">
-        <h2 className="text-3xl md:text-4xl uppercase tracking-tighter mb-12 text-center">Boring but Real Reflections</h2>
-        <div className="flex gap-6 overflow-x-auto pb-8 snap-x no-scrollbar">
+        <h2 className="text-3xl md:text-4xl uppercase tracking-tighter mb-12 text-center reflection-title">Boring but Real Reflections</h2>
+        <div className="flex gap-6 overflow-x-auto pb-8 snap-x no-scrollbar reflection-card-container">
           {[
             { date: "Day 3", note: "Bhai, honestly coding is hard. Today I tried to break a big problem into small pieces like they said in W1. It felt slow but atleast I didn't get stuck for 3 hours on one error. Slowly understanding." },
             { date: "Day 12", note: "Week 2 is all about consistency. Sometimes I want to play games but I forced myself to solve 2 problems. My English is not good so explaining logic is difficult, but I am trying my best." },
@@ -161,13 +228,13 @@ export default function Home() {
 
       {/* Assignment Work Section */}
       <section className="py-24 px-4 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-12">
+        <div className="flex justify-between items-end mb-12 assignment-title">
           <h2 className="text-4xl md:text-5xl uppercase tracking-tighter">Assignment Work</h2>
           <Button variant="ghost" className="uppercase tracking-widest text-xs no-default-hover-elevate">See All</Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Avatar Video Section */}
-          <div className="group cursor-pointer block">
+          <div className="group cursor-pointer block assignment-card">
             <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
               <video 
@@ -215,7 +282,7 @@ export default function Home() {
             { title: "Real estate website", category: "Web Design", image: realEstateImg, url: "https://lumina-gdkv.onrender.com" },
             { title: "Yt video", category: "Video" }
           ].map((project, i) => (
-            <a key={i} href={project.url} target="_blank" rel="noopener noreferrer" className="group cursor-pointer block">
+            <a key={i} href={project.url} target="_blank" rel="noopener noreferrer" className="group cursor-pointer block assignment-card">
               <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
                 {project.image ? (
@@ -247,12 +314,12 @@ export default function Home() {
         </div>
         
         <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 thanks-title">
             <h2 className="text-5xl md:text-7xl uppercase tracking-tighter mb-6 font-display">Special Thanks</h2>
             <p className="text-muted-foreground uppercase tracking-[0.3em] text-xs">To the pillars of my 5-week journey</p>
           </div>
 
-          <Card className="p-12 bg-[#fdf6e3] dark:bg-[#2c2c2c] border-none shadow-[0_0_50px_rgba(0,0,0,0.3)] transform -rotate-1 relative overflow-hidden">
+          <Card className="p-12 bg-[#fdf6e3] dark:bg-[#2c2c2c] border-none shadow-[0_0_50px_rgba(0,0,0,0.3)] transform -rotate-1 relative overflow-hidden thanks-card">
             <div className="absolute top-0 right-0 p-4 opacity-10">
               <div className="w-20 h-20 border-4 border-primary rounded-full" />
             </div>
