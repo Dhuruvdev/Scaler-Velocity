@@ -11,20 +11,6 @@ export function Navbar() {
         <Link href="/" className="text-xl font-display lowercase tracking-tighter mr-4 text-white">
           Dhuruv M<span className="text-primary">.</span>
         </Link>
-        <div className="hidden md:flex items-center gap-6 mr-6">
-          {["Services", "Work", "About", "Blog"].map((item) => (
-            <Link 
-              key={item} 
-              href={`/${item.toLowerCase()}`}
-              className={cn(
-                "text-[10px] uppercase tracking-[0.2em] font-bold transition-colors",
-                location === `/${item.toLowerCase()}` ? "text-primary" : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {item}
-            </Link>
-          ))}
-        </div>
         <Link href="/dhuruv">
           <Button size="sm" className="bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold px-4 rounded-full h-8">
             Let's Talk
