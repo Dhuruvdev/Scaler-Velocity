@@ -1,102 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { ArrowDown, ExternalLink, MessageCircle, X, Send, User, Sparkles, Bot } from "lucide-react";
+import { ArrowDown, ExternalLink, MessageCircle } from "lucide-react";
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
 import realEstateImg from "@assets/IMG_20260104_234323_434_1767606998595.jpg";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatMessage, setChatMessage] = useState("");
-  const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const { data: conversation } = useQuery<any>({
-    queryKey: ["/api/conversations", currentConversationId],
-    enabled: !!currentConversationId,
-  });
-
-  const createConversation = useMutation({
-    mutationFn: async () => {
-      const res = await apiRequest("POST", "/api/conversations", { title: "Dhuruv AI Chat" });
-      return res.json();
-    },
-    onSuccess: (data) => {
-      setCurrentConversationId(data.id);
-    },
-  });
-
-  const sendMessage = useMutation({
-    mutationFn: async (content: string) => {
-      if (!currentConversationId) return;
-      
-      const messageContent = content.trim();
-      if (!messageContent) return;
-
-      // Clear input immediately for better UX
-      setChatMessage("");
-      
-      const response = await fetch(`/api/conversations/${currentConversationId}/messages`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: messageContent }),
-      });
-
-      if (!response.ok) throw new Error("Failed to send message");
-
-      const reader = response.body?.getReader();
-      if (!reader) return;
-
-      const decoder = new TextDecoder();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n");
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.error) {
-                console.error("Chat Error:", data.error);
-                throw new Error(data.error);
-              }
-            } catch (e) {
-              // Ignore empty or malformed lines
-            }
-          }
-        }
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/conversations", currentConversationId] });
-    },
-  });
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [conversation?.messages]);
-
-  const handleOpenChat = () => {
-    setIsChatOpen(true);
-    if (!currentConversationId) {
-      createConversation.mutate();
-    }
-  };
   const heroRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<HTMLDivElement>(null);
 
@@ -324,154 +240,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Chatbot Toggle */}
-      <motion.button
-        layoutId="chat-container"
-        className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 bg-primary flex items-center justify-center text-primary-foreground hover:scale-110 active:scale-95 transition-transform"
-        onClick={handleOpenChat}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <MessageCircle className="w-8 h-8" />
-      </motion.button>
-
-      {/* Chatbot Full Screen Modal */}
-      <AnimatePresence>
-        {isChatOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-background flex flex-col md:flex-row overflow-hidden"
-          >
-            {/* Sidebar (Desktop) */}
-            <div className="hidden md:flex w-64 bg-secondary/30 border-r border-border/50 flex-col p-4">
-              <div className="flex items-center gap-2 mb-8 px-2">
-                <div className="w-8 h-8 rounded bg-primary flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="font-bold tracking-tight">Chatbot</span>
-              </div>
-              <Button 
-                variant="outline" 
-                className="justify-start gap-2 mb-4 no-default-hover-elevate"
-                onClick={() => createConversation.mutate()}
-              >
-                <Sparkles className="w-4 h-4" />
-                New Chat
-              </Button>
-              <div className="flex-1 overflow-y-auto">
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 px-2">Recent Chats</p>
-                <div className="space-y-1">
-                  <div className="p-2 rounded-md bg-secondary/50 text-xs truncate cursor-pointer hover:bg-secondary transition-colors">
-                    Internship Journey Reflection
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Main Chat Area */}
-            <div className="flex-1 flex flex-col h-full bg-background relative">
-              {/* Header */}
-              <header className="p-4 border-b flex justify-between items-center bg-background/50 backdrop-blur-md sticky top-0 z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                    <Bot className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-sm">Chatbot</h3>
-                    <p className="text-[10px] text-green-500 uppercase tracking-widest font-bold">Online</p>
-                  </div>
-                </div>
-                <Button 
-                  size="icon" 
-                  variant="ghost" 
-                  className="rounded-full"
-                  onClick={() => setIsChatOpen(false)}
-                >
-                  <X className="w-6 h-6" />
-                </Button>
-              </header>
-
-              {/* Messages Area */}
-              <ScrollArea className="flex-1 p-4 md:p-8" ref={scrollRef}>
-                <div className="max-w-3xl mx-auto space-y-8 pb-12">
-                  {!conversation?.messages?.length && (
-                    <div className="flex flex-col items-center justify-center h-[50vh] text-center space-y-4">
-                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                        <Bot className="w-10 h-10 text-primary" />
-                      </div>
-                      <h2 className="text-2xl font-bold font-display">How can I help you today?</h2>
-                      <p className="text-muted-foreground max-w-sm">
-                        I can explain Dhuruv's projects, his 5-week internship journey, or his technical skills.
-                      </p>
-                    </div>
-                  )}
-
-                  {conversation?.messages?.map((msg: any) => (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      key={msg.id} 
-                      className={cn("flex gap-4 md:gap-6", msg.role === "user" ? "flex-row-reverse" : "")}
-                    >
-                      <div className={cn(
-                        "w-8 h-8 md:w-10 md:h-10 rounded-full shrink-0 flex items-center justify-center",
-                        msg.role === "user" ? "bg-secondary text-secondary-foreground" : "bg-primary text-primary-foreground"
-                      )}>
-                        {msg.role === "user" ? <User className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
-                      </div>
-                      <div className={cn(
-                        "flex-1 max-w-[85%] md:max-w-[75%] space-y-1",
-                        msg.role === "user" ? "text-right" : ""
-                      )}>
-                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold px-1">
-                          {msg.role === "user" ? "You" : "Chatbot"}
-                        </p>
-                        <div className={cn(
-                          "p-4 rounded-2xl text-sm leading-relaxed shadow-sm",
-                          msg.role === "user" ? "bg-primary text-primary-foreground rounded-tr-none ml-auto" : "bg-secondary/30 rounded-tl-none mr-auto"
-                        )}>
-                          {msg.content}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </ScrollArea>
-
-              {/* Input Area */}
-              <div className="p-4 md:p-8 border-t bg-background/80 backdrop-blur-md">
-                <form 
-                  className="max-w-3xl mx-auto relative group" 
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (chatMessage.trim()) sendMessage.mutate(chatMessage);
-                  }}
-                >
-                  <Input
-                    placeholder="Message Chatbot..."
-                    value={chatMessage}
-                    onChange={(e) => setChatMessage(e.target.value)}
-                    className="bg-secondary/20 border-border/50 h-14 pl-6 pr-14 rounded-2xl text-base focus-visible:ring-primary/20 shadow-inner"
-                  />
-                  <Button 
-                    size="icon" 
-                    type="submit" 
-                    className="absolute right-2 top-2 h-10 w-10 rounded-xl bg-primary hover:scale-105 transition-transform"
-                    disabled={sendMessage.isPending || !chatMessage.trim()}
-                  >
-                    <Send className="w-5 h-5" />
-                  </Button>
-                  <p className="text-[10px] text-center mt-3 text-muted-foreground">
-                    Chatbot can make mistakes. Verify important information.
-                  </p>
-                </form>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Chatbot Bubble */}
+      <Link href="/dhuruv">
+        <motion.button
+          className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 bg-primary flex items-center justify-center text-primary-foreground hover:scale-110 active:scale-95 transition-transform"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <MessageCircle className="w-8 h-8" />
+        </motion.button>
+      </Link>
     </div>
   );
 }

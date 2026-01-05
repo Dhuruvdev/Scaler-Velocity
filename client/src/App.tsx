@@ -12,6 +12,7 @@ import Home from "@/pages/Home";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import ProjectDetails from "@/pages/ProjectDetails";
+import Dhuruv from "@/pages/Dhuruv";
 import NotFound from "@/pages/not-found";
 
 function ScrollToTop() {
@@ -33,6 +34,7 @@ function Router() {
           <Route path="/blog" component={Blog} />
           <Route path="/blog/:slug" component={BlogPost} />
           <Route path="/projects/:slug" component={ProjectDetails} />
+          <Route path="/dhuruv" component={Dhuruv} />
           <Route component={NotFound} />
         </Switch>
       </main>

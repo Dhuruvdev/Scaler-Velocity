@@ -12,7 +12,7 @@ export function Navbar() {
           Dhuruv M<span className="text-primary">.</span>
         </Link>
         <div className="hidden md:flex items-center gap-6 mr-6">
-          {["Services", "Work", "About", "Blog", "Pages"].map((item) => (
+          {["Services", "Work", "About", "Blog"].map((item) => (
             <Link 
               key={item} 
               href={`/${item.toLowerCase()}`}
@@ -25,9 +25,11 @@ export function Navbar() {
             </Link>
           ))}
         </div>
-        <Button size="sm" className="bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold px-4 rounded-full h-8">
-          Let's Talk
-        </Button>
+        <Link href="/dhuruv">
+          <Button size="sm" className="bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold px-4 rounded-full h-8">
+            Let's Talk
+          </Button>
+        </Link>
       </div>
     </nav>
   );
