@@ -250,12 +250,11 @@ export default function Home() {
                       });
                     }, { threshold: 0.5 });
                     observer.observe(el);
-                    
-                    // Add click to toggle audio because browsers block autoplay with sound
-                    el.onclick = () => {
-                      el.muted = !el.muted;
-                    };
                   }
+                }}
+                onClick={(e) => {
+                  const video = e.currentTarget;
+                  video.muted = !video.muted;
                 }}
                 src={avatarVideo} 
                 className="w-full h-full object-cover cursor-pointer"
