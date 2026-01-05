@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { ArrowDown, ExternalLink, MessageCircle, X, Send, User } from "lucide-react";
+import { ArrowDown, ExternalLink, MessageCircle, X, Send, User, Sparkles, Bot } from "lucide-react";
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
 import realEstateImg from "@assets/IMG_20260104_234323_434_1767606998595.jpg";
 import { useEffect, useRef, useState } from "react";
@@ -12,6 +12,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { AnimatePresence, motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -287,81 +288,153 @@ export default function Home() {
       </section>
 
       {/* Chatbot Toggle */}
-      <Button
-        size="icon"
-        className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-110"
+      <motion.button
+        layoutId="chat-container"
+        className="fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 bg-primary flex items-center justify-center text-primary-foreground hover:scale-110 active:scale-95 transition-transform"
         onClick={handleOpenChat}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
       >
-        <MessageCircle className="w-8 h-8 text-primary-foreground" />
-      </Button>
+        <MessageCircle className="w-8 h-8" />
+      </motion.button>
 
-      {/* Chatbot Modal */}
-      {isChatOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
-          <Card className="w-full max-w-lg h-[600px] flex flex-col relative shadow-2xl border-border/50 overflow-hidden">
-            <div className="p-4 border-b flex justify-between items-center bg-secondary/30">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">C</div>
-                <div>
-                  <h3 className="font-bold text-sm">Chatbot</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Always Active</p>
+      {/* Chatbot Full Screen Modal */}
+      <AnimatePresence>
+        {isChatOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-background flex flex-col md:flex-row overflow-hidden"
+          >
+            {/* Sidebar (Desktop) */}
+            <div className="hidden md:flex w-64 bg-secondary/30 border-r border-border/50 flex-col p-4">
+              <div className="flex items-center gap-2 mb-8 px-2">
+                <div className="w-8 h-8 rounded bg-primary flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-primary-foreground" />
                 </div>
+                <span className="font-bold tracking-tight">Chatbot</span>
               </div>
-              <Button size="icon" variant="ghost" onClick={() => setIsChatOpen(false)}>
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
-
-            <ScrollArea className="flex-1 p-4 bg-background/50" ref={scrollRef}>
-              <div className="space-y-4">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary shrink-0 flex items-center justify-center text-[10px] text-primary-foreground font-bold">C</div>
-                  <div className="bg-secondary/50 p-3 rounded-2xl rounded-tl-none text-sm max-w-[80%]">
-                    Hi 👋 I'm your Chatbot. I can walk you through my internship journey, projects, and how I think as an engineer. What would you like to explore?
-                  </div>
-                </div>
-
-                {conversation?.messages?.map((msg: any) => (
-                  <div key={msg.id} className={cn("flex gap-3", msg.role === "user" ? "flex-row-reverse" : "")}>
-                    <div className={cn(
-                      "w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[10px] font-bold",
-                      msg.role === "user" ? "bg-muted text-muted-foreground" : "bg-primary text-primary-foreground"
-                    )}>
-                      {msg.role === "user" ? <User className="w-4 h-4" /> : "C"}
-                    </div>
-                    <div className={cn(
-                      "p-3 rounded-2xl text-sm max-w-[80%]",
-                      msg.role === "user" ? "bg-primary text-primary-foreground rounded-tr-none" : "bg-secondary/50 rounded-tl-none"
-                    )}>
-                      {msg.content}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-
-            <div className="p-4 border-t bg-secondary/30">
-              <form 
-                className="flex gap-2" 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (chatMessage.trim()) sendMessage.mutate(chatMessage);
-                }}
+              <Button 
+                variant="outline" 
+                className="justify-start gap-2 mb-4 no-default-hover-elevate"
+                onClick={() => createConversation.mutate()}
               >
-                <Input
-                  placeholder="Ask me anything..."
-                  value={chatMessage}
-                  onChange={(e) => setChatMessage(e.target.value)}
-                  className="bg-background border-border/50 h-10"
-                />
-                <Button size="icon" type="submit" disabled={sendMessage.isPending || !chatMessage.trim()}>
-                  <Send className="w-4 h-4" />
-                </Button>
-              </form>
+                <Sparkles className="w-4 h-4" />
+                New Chat
+              </Button>
+              <div className="flex-1 overflow-y-auto">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 px-2">Recent Chats</p>
+                <div className="space-y-1">
+                  <div className="p-2 rounded-md bg-secondary/50 text-xs truncate cursor-pointer hover:bg-secondary transition-colors">
+                    Internship Journey Reflection
+                  </div>
+                </div>
+              </div>
             </div>
-          </Card>
-        </div>
-      )}
+
+            {/* Main Chat Area */}
+            <div className="flex-1 flex flex-col h-full bg-background relative">
+              {/* Header */}
+              <header className="p-4 border-b flex justify-between items-center bg-background/50 backdrop-blur-md sticky top-0 z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+                    <Bot className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm">Chatbot</h3>
+                    <p className="text-[10px] text-green-500 uppercase tracking-widest font-bold">Online</p>
+                  </div>
+                </div>
+                <Button 
+                  size="icon" 
+                  variant="ghost" 
+                  className="rounded-full"
+                  onClick={() => setIsChatOpen(false)}
+                >
+                  <X className="w-6 h-6" />
+                </Button>
+              </header>
+
+              {/* Messages Area */}
+              <ScrollArea className="flex-1 p-4 md:p-8" ref={scrollRef}>
+                <div className="max-w-3xl mx-auto space-y-8 pb-12">
+                  {!conversation?.messages?.length && (
+                    <div className="flex flex-col items-center justify-center h-[50vh] text-center space-y-4">
+                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                        <Bot className="w-10 h-10 text-primary" />
+                      </div>
+                      <h2 className="text-2xl font-bold font-display">How can I help you today?</h2>
+                      <p className="text-muted-foreground max-w-sm">
+                        I can explain Dhuruv's projects, his 5-week internship journey, or his technical skills.
+                      </p>
+                    </div>
+                  )}
+
+                  {conversation?.messages?.map((msg: any) => (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      key={msg.id} 
+                      className={cn("flex gap-4 md:gap-6", msg.role === "user" ? "flex-row-reverse" : "")}
+                    >
+                      <div className={cn(
+                        "w-8 h-8 md:w-10 md:h-10 rounded-full shrink-0 flex items-center justify-center",
+                        msg.role === "user" ? "bg-secondary text-secondary-foreground" : "bg-primary text-primary-foreground"
+                      )}>
+                        {msg.role === "user" ? <User className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
+                      </div>
+                      <div className={cn(
+                        "flex-1 max-w-[85%] md:max-w-[75%] space-y-1",
+                        msg.role === "user" ? "text-right" : ""
+                      )}>
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold px-1">
+                          {msg.role === "user" ? "You" : "Chatbot"}
+                        </p>
+                        <div className={cn(
+                          "p-4 rounded-2xl text-sm leading-relaxed shadow-sm",
+                          msg.role === "user" ? "bg-primary text-primary-foreground rounded-tr-none ml-auto" : "bg-secondary/30 rounded-tl-none mr-auto"
+                        )}>
+                          {msg.content}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </ScrollArea>
+
+              {/* Input Area */}
+              <div className="p-4 md:p-8 border-t bg-background/80 backdrop-blur-md">
+                <form 
+                  className="max-w-3xl mx-auto relative group" 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (chatMessage.trim()) sendMessage.mutate(chatMessage);
+                  }}
+                >
+                  <Input
+                    placeholder="Message Chatbot..."
+                    value={chatMessage}
+                    onChange={(e) => setChatMessage(e.target.value)}
+                    className="bg-secondary/20 border-border/50 h-14 pl-6 pr-14 rounded-2xl text-base focus-visible:ring-primary/20 shadow-inner"
+                  />
+                  <Button 
+                    size="icon" 
+                    type="submit" 
+                    className="absolute right-2 top-2 h-10 w-10 rounded-xl bg-primary hover:scale-105 transition-transform"
+                    disabled={sendMessage.isPending || !chatMessage.trim()}
+                  >
+                    <Send className="w-5 h-5" />
+                  </Button>
+                  <p className="text-[10px] text-center mt-3 text-muted-foreground">
+                    Chatbot can make mistakes. Verify important information.
+                  </p>
+                </form>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
