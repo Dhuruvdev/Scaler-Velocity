@@ -213,10 +213,10 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {[
             { title: "AI avatar introduction Video", category: "Video" },
-            { title: "Real estate website", category: "Web Design", image: realEstateImg },
+            { title: "Real estate website", category: "Web Design", image: realEstateImg, url: "https://lumina-gdkv.onrender.com" },
             { title: "Yt video", category: "Video" }
           ].map((project, i) => (
-            <div key={i} className="group cursor-pointer">
+            <a key={i} href={project.url} target="_blank" rel="noopener noreferrer" className="group cursor-pointer block">
               <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
                 {project.image ? (
@@ -236,7 +236,7 @@ export default function Home() {
                   <ExternalLink className="w-4 h-4" />
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
@@ -247,42 +247,42 @@ export default function Home() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05)_0%,transparent_50%)] animate-pulse" />
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl uppercase tracking-tighter mb-6 font-display">Special Thanks</h2>
             <p className="text-muted-foreground uppercase tracking-[0.3em] text-xs">To the pillars of my 5-week journey</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)]">
-              <div className="aspect-square mb-6 overflow-hidden rounded-full border-2 border-primary/20 p-2 grayscale group-hover:grayscale-0 transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=400" alt="Scaler" className="w-full h-full object-cover rounded-full" />
-              </div>
-              <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">Scaler</h3>
-              <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
-                For the platform, the structure, and the challenge that pushed me to grow.
+          <Card className="p-12 bg-[#fdf6e3] dark:bg-[#2c2c2c] border-none shadow-[0_0_50px_rgba(0,0,0,0.3)] transform -rotate-1 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <div className="w-20 h-20 border-4 border-primary rounded-full" />
+            </div>
+            
+            <div className="font-handwriting text-2xl md:text-3xl text-[#2c2c2c] dark:text-[#e0e0e0] space-y-8 leading-relaxed">
+              <p>Dear Scaler and Mentors,</p>
+              
+              <p>
+                I want to say a huge thank you to <span className="text-primary font-bold">Scaler</span> for providing this life-changing 5-week challenge. 
+                A special shoutout to our host, <span className="text-primary font-bold">Disha Maroly</span>, whose energy kept us all going in every live session.
               </p>
-            </Card>
-
-            <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] scale-110 z-20">
-              <div className="aspect-square mb-6 overflow-hidden rounded-full border-2 border-primary/20 p-2 grayscale group-hover:grayscale-0 transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=400" alt="Host" className="w-full h-full object-cover rounded-full" />
-              </div>
-              <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">Our Host</h3>
-              <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
-                For the guidance and the live energy that made every session meaningful.
+              
+              <p>
+                And to <span className="text-primary font-bold">all the mentors</span>—thank you for your patience and for sharing your technical wisdom. 
+                I've learned so much more than just code; I've learned how to think like an engineer.
               </p>
-            </Card>
-
-            <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)]">
-              <div className="p-8 flex flex-col items-center justify-center h-full">
-                <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">All Mentors</h3>
-                <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity italic">
-                  "Thank you to all the mentors for your incredible wisdom and live session guidance. Your support made this 5-week journey possible."
-                </p>
+              
+              <div className="pt-12 flex justify-between items-end border-t border-[#8b7d6b]/20">
+                <div>
+                  <p className="text-sm font-sans uppercase tracking-widest text-muted-foreground mb-1 italic">Internship Milestone</p>
+                  <p className="text-lg font-bold">2026 Challenge</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-sans uppercase tracking-widest text-muted-foreground mb-1 italic">Warm regards,</p>
+                  <p className="text-3xl font-handwriting">Dhuruv M</p>
+                </div>
               </div>
-            </Card>
-          </div>
+            </div>
+          </Card>
         </div>
       </section>
 
