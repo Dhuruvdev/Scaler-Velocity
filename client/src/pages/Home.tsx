@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { ArrowDown, ExternalLink, MessageCircle, X, Send, User } from "lucide-react";
 import heroImg from "@assets/IMG_20260104_192056-removebg-preview_1767537950249.png";
+import realEstateImg from "@assets/IMG_20260104_234323_434_1767606998595.jpg";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -212,15 +213,19 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {[
             { title: "AI avatar introduction Video", category: "Video" },
-            { title: "Real estate website", category: "Web Design" },
+            { title: "Real estate website", category: "Web Design", image: realEstateImg },
             { title: "Yt video", category: "Video" }
           ].map((project, i) => (
             <div key={i} className="group cursor-pointer">
               <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground italic">
-                  {project.title}
-                </div>
+                {project.image ? (
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                ) : (
+                  <div className="w-full h-full bg-secondary flex items-center justify-center text-muted-foreground italic">
+                    {project.title}
+                  </div>
+                )}
               </div>
               <div className="flex justify-between items-center">
                 <div>
@@ -270,13 +275,12 @@ export default function Home() {
             </Card>
 
             <Card className="p-8 bg-secondary/20 border-white/5 backdrop-blur-xl group hover-elevate transition-all duration-700 hover:shadow-[0_0_50px_rgba(255,255,255,0.05)]">
-              <div className="aspect-square mb-6 overflow-hidden rounded-full border-2 border-primary/20 p-2 grayscale group-hover:grayscale-0 transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=400" alt="Mentors" className="w-full h-full object-cover rounded-full" />
+              <div className="p-8 flex flex-col items-center justify-center h-full">
+                <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">All Mentors</h3>
+                <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity italic">
+                  "Thank you to all the mentors for your incredible wisdom and live session guidance. Your support made this 5-week journey possible."
+                </p>
               </div>
-              <h3 className="text-2xl text-center mb-4 tracking-tighter uppercase font-bold">All Mentors</h3>
-              <p className="text-center text-muted-foreground text-xs leading-relaxed uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
-                For the technical wisdom and the live feedback during the sessions.
-              </p>
             </Card>
           </div>
         </div>
