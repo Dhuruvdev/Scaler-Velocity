@@ -11,11 +11,11 @@ export function Navbar() {
         <Link href="/" className="text-xl font-display lowercase tracking-tighter mr-4 text-white">
           Dhuruv M<span className="text-primary">.</span>
         </Link>
-        <Link href="/dhuruv">
+        <a href="https://www.linkedin.com/in/dhuruv-m-790b06281?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
           <Button size="sm" className="bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold px-4 rounded-full h-8">
             Let's Talk
           </Button>
-        </Link>
+        </a>
       </div>
     </nav>
   );

@@ -12,13 +12,13 @@ export function Footer() {
         </div>
         
         <div className="flex items-center gap-6 text-muted-foreground">
-          <a href="#" className="hover:text-primary transition-colors">
+          <a href="https://www.linkedin.com/in/dhuruv-m-790b06281?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
             <SiLinkedin className="w-5 h-5" />
           </a>
-          <a href="#" className="hover:text-primary transition-colors">
+          <a href="https://www.instagram.com/falooda.ly?igsh=am02ZnhvejR3Mmll" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
             <SiInstagram className="w-5 h-5" />
           </a>
-          <a href="#" className="hover:text-primary transition-colors">
+          <a href="https://discord.com/users/1354287041772392478" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
             <SiDiscord className="w-5 h-5" />
           </a>
         </div>
