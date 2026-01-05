@@ -175,19 +175,30 @@ export default function Home() {
                   if (el) {
                     const observer = new IntersectionObserver((entries) => {
                       entries.forEach(entry => {
-                        if (entry.isIntersecting) el.play().catch(() => {});
-                        else el.pause();
+                        if (entry.isIntersecting) {
+                          el.play().catch(() => {});
+                        } else {
+                          el.pause();
+                        }
                       });
                     }, { threshold: 0.5 });
                     observer.observe(el);
+                    
+                    // Add click to toggle audio because browsers block autoplay with sound
+                    el.onclick = () => {
+                      el.muted = !el.muted;
+                    };
                   }
                 }}
                 src={avatarVideo} 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover cursor-pointer"
                 loop
-                muted
                 playsInline
+                muted
               />
+              <div className="absolute bottom-4 right-4 z-20 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity">
+                <p className="text-[10px] bg-black/50 px-2 py-1 rounded text-white uppercase tracking-widest font-bold">Click for Sound</p>
+              </div>
             </div>
             <div className="flex justify-between items-center">
               <div>
