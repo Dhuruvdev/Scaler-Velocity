@@ -171,13 +171,22 @@ export default function Home() {
             <div className="aspect-video bg-muted mb-6 overflow-hidden rounded-sm relative">
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
               <video 
+                ref={(el) => {
+                  if (el) {
+                    const observer = new IntersectionObserver((entries) => {
+                      entries.forEach(entry => {
+                        if (entry.isIntersecting) el.play().catch(() => {});
+                        else el.pause();
+                      });
+                    }, { threshold: 0.5 });
+                    observer.observe(el);
+                  }
+                }}
                 src={avatarVideo} 
                 className="w-full h-full object-cover"
                 loop
                 muted
                 playsInline
-                onMouseEnter={(e) => e.currentTarget.play()}
-                onMouseLeave={(e) => e.currentTarget.pause()}
               />
             </div>
             <div className="flex justify-between items-center">
